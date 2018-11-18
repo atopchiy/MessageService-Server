@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MessageServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Subject" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsSent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageToRecipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageId" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecipientId" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Message_Message">
+          <End Role="Message" Type="Self.Message" Multiplicity="1" />
+          <End Role="Message1" Type="Self.Message" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message1">
+          <End Role="Message" Type="Self.Message" Multiplicity="1" />
+          <End Role="Message1" Type="Self.Message" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message2">
+          <End Role="Message" Type="Self.Message" Multiplicity="1" />
+          <End Role="Message1" Type="Self.Message" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MessageToRecipient_Message">
+          <End Role="Message" Type="Self.Message" Multiplicity="1" />
+          <End Role="MessageToRecipient" Type="Self.MessageToRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageToRecipient">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MessageToRecipient_Recipient">
+          <End Role="Recipient" Type="Self.Recipient" Multiplicity="1" />
+          <End Role="MessageToRecipient" Type="Self.MessageToRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageToRecipient">
+              <PropertyRef Name="RecipientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MessageServiceModelStoreContainer">
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageToRecipient" EntityType="Self.MessageToRecipient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recipient" EntityType="Self.Recipient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Message_Message" Association="Self.FK_Message_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message1" Association="Self.FK_Message_Message1">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message2" Association="Self.FK_Message_Message2">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MessageToRecipient_Message" Association="Self.FK_MessageToRecipient_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="MessageToRecipient" EntitySet="MessageToRecipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MessageToRecipient_Recipient" Association="Self.FK_MessageToRecipient_Recipient">
+            <End Role="Recipient" EntitySet="Recipient" />
+            <End Role="MessageToRecipient" EntitySet="MessageToRecipient" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MessageServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsSent" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MessageToRecipient" Relationship="MessageServiceModel.FK_MessageToRecipient_Message" FromRole="Message" ToRole="MessageToRecipient" />
+          <NavigationProperty Name="Message1" Relationship="MessageServiceModel.FK_Message_Message" FromRole="Message" ToRole="Message1" />
+          <NavigationProperty Name="Message2" Relationship="MessageServiceModel.FK_Message_Message" FromRole="Message1" ToRole="Message" />
+          <NavigationProperty Name="Message11" Relationship="MessageServiceModel.FK_Message_Message1" FromRole="Message" ToRole="Message1" />
+          <NavigationProperty Name="Message3" Relationship="MessageServiceModel.FK_Message_Message1" FromRole="Message1" ToRole="Message" />
+          <NavigationProperty Name="Message12" Relationship="MessageServiceModel.FK_Message_Message2" FromRole="Message" ToRole="Message1" />
+          <NavigationProperty Name="Message4" Relationship="MessageServiceModel.FK_Message_Message2" FromRole="Message1" ToRole="Message" />
+          </EntityType>
+        <EntityType Name="Recipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MessageToRecipient" Relationship="MessageServiceModel.FK_MessageToRecipient_Recipient" FromRole="Recipient" ToRole="MessageToRecipient" />
+        </EntityType>
+        <EntityContainer Name="MessageServiceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Message" EntityType="Self.Message" />
+          <EntitySet Name="Recipient" EntityType="Self.Recipient" />
+          <EntitySet Name="MessageToRecipient" EntityType="MessageServiceModel.MessageToRecipient" />
+          <AssociationSet Name="FK_MessageToRecipient_Message" Association="MessageServiceModel.FK_MessageToRecipient_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="MessageToRecipient" EntitySet="MessageToRecipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MessageToRecipient_Recipient" Association="MessageServiceModel.FK_MessageToRecipient_Recipient">
+            <End Role="Recipient" EntitySet="Recipient" />
+            <End Role="MessageToRecipient" EntitySet="MessageToRecipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message" Association="MessageServiceModel.FK_Message_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message1" Association="MessageServiceModel.FK_Message_Message1">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message2" Association="MessageServiceModel.FK_Message_Message2">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="MessageToRecipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MessageId" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="RecipientId" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Message" Relationship="MessageServiceModel.FK_MessageToRecipient_Message" FromRole="MessageToRecipient" ToRole="Message" />
+          <NavigationProperty Name="Recipient" Relationship="MessageServiceModel.FK_MessageToRecipient_Recipient" FromRole="MessageToRecipient" ToRole="Recipient" />
+        </EntityType>
+        <Association Name="FK_MessageToRecipient_Message">
+          <End Type="MessageServiceModel.Message" Role="Message" Multiplicity="1" />
+          <End Type="MessageServiceModel.MessageToRecipient" Role="MessageToRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageToRecipient">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MessageToRecipient_Recipient">
+          <End Type="MessageServiceModel.Recipient" Role="Recipient" Multiplicity="1" />
+          <End Type="MessageServiceModel.MessageToRecipient" Role="MessageToRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageToRecipient">
+              <PropertyRef Name="RecipientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message">
+          <End Type="MessageServiceModel.Message" Role="Message" Multiplicity="1" />
+          <End Type="MessageServiceModel.Message" Role="Message1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message1">
+          <End Type="MessageServiceModel.Message" Role="Message" Multiplicity="1" />
+          <End Type="MessageServiceModel.Message" Role="Message1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message2">
+          <End Type="MessageServiceModel.Message" Role="Message" Multiplicity="1" />
+          <End Type="MessageServiceModel.Message" Role="Message1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MessageServiceModelStoreContainer" CdmEntityContainer="MessageServiceEntities">
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="MessageServiceModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipient">
+            <EntityTypeMapping TypeName="MessageServiceModel.Recipient">
+              <MappingFragment StoreEntitySet="Recipient">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageToRecipient">
+            <EntityTypeMapping TypeName="MessageServiceModel.MessageToRecipient">
+              <MappingFragment StoreEntitySet="MessageToRecipient">
+                <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
